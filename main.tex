@@ -1,0 +1,643 @@
+
+\documentclass[french]{article}
+
+% Encodage et langue
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% Mise en forme générale
+\usepackage{fullpage}
+\usepackage[parfill]{parskip}
+\usepackage[hidelinks]{hyperref}  % Liens hypertext
+
+% Graphiques et images
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18,legend to name={customlegend}}
+\usepgfplotslibrary{statistics}
+\usetikzlibrary{pgfplots.statistics}
+\usepackage{tikz}
+\usepackage{svg}
+\usepackage{subcaption}
+\usepackage{rotating}
+\usepackage{float} % Pour positionner les images
+
+% Mathématiques
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+% Importation de code
+\usepackage{listings}
+\usepackage{listingsutf8}
+\usepackage{xcolor}  % Couleur code
+
+% Autres utilitaires
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{pifont}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{lipsum} % Pour du texte factice
+\usepackage{pdflscape}
+\usepackage{adjustbox}
+\usepackage{hyperref}
+\usepackage[most]{tcolorbox}
+
+% Définir le style par défaut
+\tcbset{
+  defaultstyle/.style={
+    colback=gray!5!white,
+    fonttitle=\bfseries
+    
+  }
+}
+
+% Pour le code
+\lstset{
+    language=Java,
+    inputencoding=utf8/latin1,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!70!black},
+    stringstyle=\color{red},
+    breaklines=true,
+    showstringspaces=false,
+    tabsize=4,
+    frame=tb,
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    captionpos=b
+}
+
+% Pour l'indentation
+\usepackage{indentfirst} 
+\setlength{\parindent}{1em} 
+
+\usepackage{titlesec}
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{}{0em}{}
+
+
+% Change font
+%\usepackage[T1]{fontenc}
+%\renewcommand*\rmdefault{}
+
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+    % \includegraphics[width=1\textwidth]{log.jpg}
+    \vspace{2.5cm} 
+    
+    \noindent\rule{15cm}{0.4pt}
+    \vspace{0.25cm} 
+    {\huge\bfseries Catalogue de Design Pattern \par}
+    \vspace{0.5cm}
+    {\scshape\Large  \par}
+    \vspace{0.5cm}
+    \noindent\rule{15cm}{0.4pt}
+    \vfill
+
+
+% Bottom of the page
+	{\Large\scshape Charels Hugo \par}
+	\vspace{0.5cm}
+	{\Large\scshape B-INFO\par}
+	\vspace{1cm}
+	{\large 2023-2024 \par}
+\end{titlepage}
+
+
+\tableofcontents
+\clearpage
+
+
+\section{Patterns de Création (Creational)}
+
+
+\subsection{Abstract Factory}
+
+\subsubsection{Description}
+
+Le design pattern Abstract Factory est un modèle de conception qui appartient à la catégorie des patrons de conception creational (de création). Son objectif principal est de fournir une interface pour créer des familles d'objets liés ou dépendants sans spécifier leurs classes concrètes. Cela signifie que le code client peut créer des objets sans avoir à connaître les détails spécifiques de leur implémentation.
+
+Voici les principaux éléments qui composent le design pattern Abstract Factory :
+
+\begin{enumerate}
+    \item \textbf{Abstract Factory (Fabrique Abstraite)} :
+    \begin{itemize}
+        \item Il s'agit de l'interface définissant des méthodes pour créer chacun des types d'objets abstraits faisant partie de la famille d'objets.
+        \item Chaque méthode de l'interface correspond à la création d'un type d'objet abstrait.
+    \end{itemize}
+    
+    \item \textbf{Concrete Factory (Fabrique Concrète)} :
+    \begin{itemize}
+        \item Les implémentations concrètes de l'interface Abstract Factory.
+        \item Chaque Concrete Factory est responsable de la création de toute une famille d'objets concrets.
+    \end{itemize}
+    
+    \item \textbf{Abstract Product (Produit Abstrait)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite définissant le comportement des objets de la famille.
+        \item Chaque produit de la famille possède ses propres méthodes, mais ces méthodes sont déclarées dans l'interface ou la classe abstraite commune à tous les produits.
+    \end{itemize}
+    
+    \item \textbf{Concrete Product (Produit Concret)} :
+    \begin{itemize}
+        \item Les implémentations concrètes des produits abstraits.
+        \item Chaque Concrete Product est une implémentation spécifique d'un produit de la famille.
+    \end{itemize}
+    
+    \item \textbf{Client} :
+    \begin{itemize}
+        \item Utilise l'interface de l'Abstract Factory pour créer des objets.
+        \item N'a pas besoin de connaître les détails spécifiques de la création des objets.
+        \item Travailler avec les objets via leurs interfaces abstraites.
+    \end{itemize}
+\end{enumerate}
+
+Le processus de création d'objets avec le design pattern Abstract Factory se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client appelle les méthodes de création de l'Abstract Factory pour obtenir des objets.
+    \item L'Abstract Factory, en fonction de son type concret, crée les instances concrètes des produits de la famille.
+    \item Le client utilise les objets créés via les interfaces abstraites, ce qui lui permet de rester indépendant des classes concrètes spécifiques.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il favorise la séparation des préoccupations en permettant aux clients de créer des familles d'objets apparentés sans avoir à connaître les détails de leur implémentation. Cela rend le code plus modulaire, plus flexible et plus facile à étendre. De plus, il favorise le principe de substitution de Liskov, car les objets peuvent être utilisés via leurs interfaces abstraites, permettant ainsi aux implémentations concrètes d'être interchangées facilement.
+
+\subsubsection{Exemple}
+
+Imaginons que nous construisons une application de rendu graphique qui doit fonctionner sur différentes plateformes, telles que Windows et Linux. Pour chaque plateforme, nous devons créer des boutons, des cases à cocher et des champs de texte avec un aspect spécifique à cette plateforme. Nous pouvons utiliser le Design Pattern Abstract Factory pour créer une fabrique abstraite qui sera implémentée par des fabriques concrètes pour chaque plateforme. Ainsi, notre code client peut créer des widgets sans se soucier de la plateforme sous-jacente.
+
+\lstinputlisting[language=Java, caption=abstract\_factory.java]{code/creational/abstract_factory.java}
+
+
+
+
+
+\subsection{Builder}
+
+\subsubsection{Description}
+
+Le design pattern Builder est un modèle de conception appartenant à la catégorie des patrons de conception creational (de création). Son objectif principal est de séparer la construction d'un objet complexe de sa représentation, de sorte que le même processus de construction puisse créer différentes représentations.
+
+Voici les principaux éléments qui composent le design pattern Builder :
+
+\begin{enumerate}
+    \item \textbf{Builder (Constructeur)} :
+    \begin{itemize}
+        \item Interface définissant les étapes de construction pour créer un objet complexe.
+    \end{itemize}
+    
+    \item \textbf{Concrete Builder (Constructeur Concret)} :
+    \begin{itemize}
+        \item Implémente l'interface Builder pour fournir des étapes de construction concrètes pour un type spécifique d'objet complexe.
+        \item Construit et assemble les parties de l'objet complexe selon les étapes spécifiées.
+    \end{itemize}
+    
+    \item \textbf{Director (Directeur)} :
+    \begin{itemize}
+        \item Dirige le processus de construction en utilisant un Builder pour construire un objet complexe.
+        \item Ne connaît pas les détails de la construction, mais utilise l'interface Builder pour orchestrer le processus.
+    \end{itemize}
+    
+    \item \textbf{Product (Produit)} :
+    \begin{itemize}
+        \item Représente l'objet complexe en cours de construction.
+        \item Peut être de n'importe quel type ou structure, en fonction de la logique de construction.
+    \end{itemize}
+\end{enumerate}
+
+Le processus de construction d'un objet complexe avec le design pattern Builder se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client crée un Builder concret et le passe au Directeur.
+    \item Le Directeur utilise le Builder pour construire l'objet complexe en suivant les étapes définies.
+    \item Une fois la construction terminée, le client récupère le produit du Builder.
+\end{enumerate}
+
+L'avantage principal de ce modèle est sa flexibilité et sa capacité à créer différentes représentations d'un même objet complexe. Il permet également de simplifier le code client en séparant la logique de construction de la logique métier. Cela facilite également l'ajout de nouvelles étapes de construction ou la modification de la logique de construction sans affecter le client.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous construisons une application pour assembler des ordinateurs. Les ordinateurs peuvent avoir différentes configurations avec des composants variés, tels que le processeur, la carte graphique, la mémoire, etc. Nous pouvons utiliser le Design Pattern Builder pour définir une interface de construction abstraite et créer des constructeurs concrets pour chaque type d'ordinateur (gamer, bureautique, etc.). Ainsi, nous pouvons construire différents types d'ordinateurs en utilisant le même processus de construction.
+
+\lstinputlisting[language=Java, caption=builder.java]{code/creational/builder.java}
+
+
+
+\subsection{Factory Method}
+
+\subsubsection{Description}
+
+Le design pattern Factory Method est un modèle de conception appartenant à la catégorie des patrons de conception creational (de création). Son objectif principal est de fournir une interface pour la création d'objets dans une classe, mais de permettre aux sous-classes de modifier le type d'objets qui seront instanciés.
+
+Voici les principaux éléments qui composent le design pattern Factory Method :
+
+\begin{enumerate}
+    \item \textbf{Product (Produit)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite définissant le type d'objets produits par le Factory Method.
+    \end{itemize}
+    
+    \item \textbf{Concrete Product (Produit Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Product.
+        \item Chaque Concrete Product représente un type spécifique d'objet créé par le Factory Method.
+    \end{itemize}
+    
+    \item \textbf{Creator (Créateur)} :
+    \begin{itemize}
+        \item Classe abstraite qui définit la méthode factoryMethod().
+        \item Cette méthode est responsable de la création d'objets de type Product.
+    \end{itemize}
+    
+    \item \textbf{Concrete Creator (Créateur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de la classe Creator.
+        \item Override la méthode factoryMethod() pour créer des instances spécifiques de Concrete Product.
+    \end{itemize}
+\end{enumerate}
+
+Le processus de création d'objets avec le design pattern Factory Method se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client appelle la méthode factoryMethod() de la classe Creator pour obtenir une instance de Product.
+    \item La classe Creator, qui peut être une classe abstraite ou une classe concrète, crée et retourne une instance de Concrete Product en appelant la méthode factoryMethod().
+    \item Le client utilise ensuite l'objet Product obtenu via l'interface commune, sans avoir besoin de connaître la classe concrète réelle de l'objet.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de déléguer la responsabilité de la création d'objets à des sous-classes, ce qui permet une meilleure extensibilité et une réduction du couplage entre les classes. Il facilite également l'ajout de nouveaux types d'objets sans avoir à modifier le code existant.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un logiciel de traitement d'images avec différents types de filtres (filtre noir et blanc, filtre sepia, etc.). Nous pouvons utiliser le Design Pattern Factory Method en définissant une classe abstraite "Filter" avec une méthode abstraite "apply", qui sera implémentée par les sous-classes pour créer des filtres spécifiques.
+
+\lstinputlisting[language=Java, caption=factory\_method.java]{code/creational/factory_method.java}
+
+
+
+
+\subsection{Prototype}
+
+\subsubsection{Description}
+
+Le design pattern Prototype est un modèle de conception appartenant à la catégorie des patrons de conception creational (de création). Son objectif principal est de permettre la création d'objets en clonant une instance existante plutôt qu'en les instanciant à partir de zéro.
+
+Voici les principaux éléments qui composent le design pattern Prototype :
+
+\begin{enumerate}
+    \item \textbf{Prototype} :
+    \begin{itemize}
+        \item Interface ou classe abstraite définissant la méthode clone().
+        \item Cette méthode est utilisée pour créer une copie profonde ou superficielle de l'objet, selon les besoins.
+    \end{itemize}
+    
+    \item \textbf{Concrete Prototype (Prototype Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Prototype.
+        \item Définit la logique de clonage de l'objet.
+    \end{itemize}
+    
+    \item \textbf{Client} :
+    \begin{itemize}
+        \item Utilise le Prototype pour créer de nouveaux objets en les clonant.
+        \item Ne nécessite pas de connaître les détails de l'implémentation du clonage.
+    \end{itemize}
+\end{enumerate}
+
+Le processus de création d'objets avec le design pattern Prototype se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client demande la création d'un nouvel objet en utilisant un objet Prototype existant.
+    \item Le Prototype, qui peut être une classe abstraite ou une classe concrète, utilise sa méthode clone() pour créer une copie de lui-même.
+    \item Le client utilise ensuite l'objet cloné selon ses besoins.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de créer de nouveaux objets avec un minimum d'effort, en évitant le processus de création coûteux. Il permet également de réduire la duplication de code et d'offrir une meilleure flexibilité en permettant la création de nouveaux types d'objets en utilisant des prototypes existants.
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application de dessin où les utilisateurs peuvent créer des formes géométriques. Pour créer une nouvelle forme, nous pouvons utiliser le Design Pattern Prototype en définissant une interface "Shape" avec une méthode "clone" qui sera implémentée par les sous-classes pour copier l'objet existant.
+
+\lstinputlisting[language=Java, caption=prototype.java]{code/creational/prototype.java}
+
+
+
+
+\subsection{Singleton}
+
+\subsubsection{Description}
+
+Le design pattern Singleton est un modèle de conception appartenant à la catégorie des patrons de conception creational (de création). Son objectif principal est de garantir qu'une classe n'a qu'une seule instance et de fournir un point d'accès global à cette instance.
+
+Voici les principaux éléments qui composent le design pattern Singleton :
+
+\begin{enumerate}
+    \item \textbf{Singleton} :
+    \begin{itemize}
+        \item Classe avec une méthode statique qui retourne toujours la même instance de cette classe.
+        \item Le constructeur de la classe est généralement rendu privé pour empêcher l'instanciation directe de la classe en dehors de la classe elle-même.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Singleton est assez simple :
+
+\begin{enumerate}
+    \item Les clients accèdent à l'instance unique de la classe Singleton en appelant la méthode statique de la classe.
+    \item Si l'instance n'existe pas encore, elle est créée et stockée dans un champ statique privé de la classe.
+    \item L'instance unique est ensuite retournée à chaque appel de la méthode statique.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il garantit qu'une classe n'a qu'une seule instance dans l'ensemble du programme, ce qui peut être utile pour des ressources partagées telles que des bases de données ou des fichiers de configuration. Cela évite également le gaspillage de ressources en évitant la création répétée d'instances et offre un point d'accès global pour accéder à cette instance unique.
+
+Cependant, l'utilisation abusive du Singleton peut conduire à des problèmes de test unitaire et à des dépendances cachées, il convient donc de l'utiliser avec discernement.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application qui a besoin d'une classe "Configuration" pour stocker les paramètres de configuration de l'application. Nous pouvons utiliser le Design Pattern Singleton pour s'assurer qu'il n'y a qu'une seule instance de la classe "Configuration" qui est partagée par l'ensemble de l'application.
+
+\lstinputlisting[language=Java, caption=singleton.java]{code/creational/singleton.java}
+
+
+% --------------------------------------------------------------------------------
+
+
+
+\section{Patterns de Structures (Structural)}
+
+\subsection{Adapter}
+
+
+\subsubsection{Description}
+
+Le design pattern Adapter est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de permettre à des interfaces incompatibles de travailler ensemble en convertissant l'interface d'une classe en une autre interface attendue par le client.
+
+Voici les principaux éléments qui composent le design pattern Adapter :
+
+\begin{enumerate}
+    \item \textbf{Target (Cible)} :
+    \begin{itemize}
+        \item Interface que le client utilise pour interagir avec le système.
+    \end{itemize}
+    
+    \item \textbf{Adapter (Adaptateur)} :
+    \begin{itemize}
+        \item Classe qui adapte l'interface d'une classe existante (Adaptee) à l'interface Target attendue par le client.
+        \item Implémente l'interface Target et contient une instance de la classe Adaptee.
+    \end{itemize}
+    
+    \item \textbf{Adaptee (Adapté)} :
+    \begin{itemize}
+        \item Classe existante dont l'interface n'est pas compatible avec l'interface Target.
+        \item La classe que l'Adapter va adapter pour qu'elle puisse être utilisée par le client.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Adapter se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client utilise l'interface Target pour interagir avec le système.
+    \item L'Adapter reçoit les appels de l'interface Target et les convertit en appels appropriés à l'interface de l'Adaptee.
+    \item L'Adaptee exécute les opérations demandées et retourne les résultats à l'Adapter.
+    \item L'Adapter convertit ensuite les résultats de l'Adaptee en un format compatible avec l'interface Target et les renvoie au client.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet d'intégrer des classes existantes dans de nouveaux systèmes sans avoir à modifier leur code source. Cela favorise la réutilisabilité du code et permet d'ajouter de nouvelles fonctionnalités sans affecter les composants existants. Cependant, l'utilisation abusive de ce modèle peut entraîner une complexité accrue du code en raison de l'ajout de plusieurs couches d'adaptation.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous avons une classe "LegacyPrinter" qui utilise une ancienne interface pour l'impression de documents. Nous développons une nouvelle classe "ModernPrinter" qui utilise une interface différente pour l'impression. Pour que notre code client puisse utiliser les deux types d'imprimantes de manière interchangeable, nous pouvons utiliser le Design Pattern Adapter pour créer un adaptateur qui convertit l'interface de "ModernPrinter" en celle de "LegacyPrinter".
+
+\lstinputlisting[language=Java, caption=adapter.java]{code/structural/adapter.java}
+
+
+
+\subsection{Bridge}
+
+\subsubsection{Description}
+
+Le design pattern Bridge est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de séparer l'abstraction d'une classe de son implémentation, permettant ainsi à ces deux parties de varier indépendamment.
+
+Voici les principaux éléments qui composent le design pattern Bridge :
+
+\begin{enumerate}
+    \item \textbf{Abstraction} :
+    \begin{itemize}
+        \item Interface qui définit les méthodes abstraites utilisées par le client.
+        \item Contient une référence à un objet Implementor.
+    \end{itemize}
+    
+    \item \textbf{Refined Abstraction (Abstraction Affinée)} :
+    \begin{itemize}
+        \item Implémentation spécifique de l'interface Abstraction.
+        \item Peut ajouter des fonctionnalités supplémentaires.
+    \end{itemize}
+    
+    \item \textbf{Implementor (Implémenteur)} :
+    \begin{itemize}
+        \item Interface qui définit les méthodes abstraites utilisées par Abstraction.
+    \end{itemize}
+    
+    \item \textbf{Concrete Implementor (Implémenteur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Implementor.
+        \item Contient la logique détaillée de l'implémentation.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Bridge se déroule comme suit :
+
+\begin{enumerate}
+    \item Le client utilise l'interface Abstraction pour interagir avec le système.
+    \item L'Abstraction délègue une partie de son implémentation à l'objet Implementor référencé.
+    \item Les différentes implémentations de Implementor peuvent être échangées dynamiquement sans affecter Abstraction.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de séparer complètement l'abstraction de son implémentation, ce qui facilite l'évolution et la maintenance du code. Il permet également de réduire le couplage entre les classes en les reliant par des interfaces plutôt que par des implémentations concrètes. Cependant, cela peut introduire une complexité supplémentaire dans le code en raison de l'ajout de plusieurs couches d'abstraction et d'implémentation.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un système de formes géométriques avec différents types de dessin (par exemple, dessin vectoriel et dessin en raster). Au lieu de créer une classe pour chaque combinaison de forme et de dessin, nous pouvons utiliser le Design Pattern Bridge pour diviser la hiérarchie en deux parties : l'abstraction (Forme) et l'implémentation (Dessin). Ainsi, nous pouvons créer des ponts (bridges) entre les formes et les dessins pour obtenir différentes combinaisons de formes et de dessins.
+
+\lstinputlisting[language=Java, caption=adapter.java]{code/structural/bridge.java}
+
+
+
+
+\subsection{Composite}
+
+\subsubsection{Description}
+
+
+
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Decorator}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Facade}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Flyweight}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Proxy}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+
+\section{Patterns de Comportement (Behavioral)}
+
+\subsection{Chain of Responsibility}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Command}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Interpreter}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Iterator}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Mediator}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Memento}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Observer}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{State}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Strategy}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Template Method}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+\subsection{Visitor}
+
+\subsubsection{Description}
+
+\subsubsection{Motivation}
+
+\subsubsection{Exemple}
+
+
+
+
+\end{document}
