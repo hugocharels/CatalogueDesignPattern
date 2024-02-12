@@ -115,6 +115,7 @@
 \tableofcontents
 \clearpage
 
+\newpage
 
 \section{Patterns de Création (Creational)}
 
@@ -178,7 +179,7 @@ Imaginons que nous construisons une application de rendu graphique qui doit fonc
 
 
 
-
+\newpage
 
 \subsection{Builder}
 
@@ -231,6 +232,7 @@ Supposons que nous construisons une application pour assembler des ordinateurs. 
 \lstinputlisting[language=Java, caption=builder.java]{code/creational/builder.java}
 
 
+\newpage
 
 \subsection{Factory Method}
 
@@ -283,7 +285,7 @@ Supposons que nous développons un logiciel de traitement d'images avec différe
 \lstinputlisting[language=Java, caption=factory\_method.java]{code/creational/factory_method.java}
 
 
-
+\newpage
 
 \subsection{Prototype}
 
@@ -330,7 +332,7 @@ Supposons que nous développons une application de dessin où les utilisateurs p
 \lstinputlisting[language=Java, caption=prototype.java]{code/creational/prototype.java}
 
 
-
+\newpage
 
 \subsection{Singleton}
 
@@ -367,6 +369,7 @@ Supposons que nous développons une application qui a besoin d'une classe "Confi
 
 \lstinputlisting[language=Java, caption=singleton.java]{code/creational/singleton.java}
 
+\newpage
 
 % --------------------------------------------------------------------------------
 
@@ -421,6 +424,7 @@ Supposons que nous avons une classe "LegacyPrinter" qui utilise une ancienne int
 \lstinputlisting[language=Java, caption=adapter.java]{code/structural/adapter.java}
 
 
+\newpage
 
 \subsection{Bridge}
 
@@ -470,62 +474,261 @@ L'avantage principal de ce modèle est qu'il permet de séparer complètement l'
 
 Supposons que nous développons un système de formes géométriques avec différents types de dessin (par exemple, dessin vectoriel et dessin en raster). Au lieu de créer une classe pour chaque combinaison de forme et de dessin, nous pouvons utiliser le Design Pattern Bridge pour diviser la hiérarchie en deux parties : l'abstraction (Forme) et l'implémentation (Dessin). Ainsi, nous pouvons créer des ponts (bridges) entre les formes et les dessins pour obtenir différentes combinaisons de formes et de dessins.
 
-\lstinputlisting[language=Java, caption=adapter.java]{code/structural/bridge.java}
+\lstinputlisting[language=Java, caption=bridge.java]{code/structural/bridge.java}
 
 
-
+\newpage
 
 \subsection{Composite}
 
 \subsubsection{Description}
 
 
+Le design pattern Composite est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de permettre la composition d'objets en structures arborescentes pour représenter les hiérarchies partie-tout.
+
+Voici les principaux éléments qui composent le design pattern Composite :
+
+\begin{enumerate}
+    \item \textbf{Component (Composant)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les composants de la structure.
+        \item Définit les méthodes communes pour manipuler les composants.
+    \end{itemize}
+    
+    \item \textbf{Leaf (Feuille)} :
+    \begin{itemize}
+        \item Implémentation concrète de la classe Component.
+        \item Représente les éléments individuels de la structure qui n'ont pas de sous-composants.
+    \end{itemize}
+    
+    \item \textbf{Composite} :
+    \begin{itemize}
+        \item Implémentation concrète de la classe Component.
+        \item Représente les éléments de la structure qui ont des sous-composants.
+        \item Contient une liste de références vers ses sous-composants.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Composite se déroule comme suit :
+
+\begin{enumerate}
+    \item Les clients manipulent les composants de la structure via l'interface commune Component.
+    \item Les opérations sont propagées récursivement dans la structure, avec chaque composant (feuille ou composite) déléguant les appels à ses sous-composants le cas échéant.
+    \item Cela permet de traiter uniformément les composants individuels et les structures complexes de manière transparente.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de manipuler des structures arborescentes de manière uniforme, en traitant les composants individuels et les structures composites de la même manière. Cela simplifie le code client en permettant de traiter une structure complexe comme une unité unique, tout en offrant une grande flexibilité dans la manipulation des composants. Cependant, cela peut rendre certaines opérations plus complexes en raison de la nécessité de gérer la récursion.
 
 
 \subsubsection{Exemple}
 
+Supposons que nous développons une application de modélisation de formes graphiques. Nous avons des formes simples (cercle, carré) et des groupes de formes qui peuvent contenir d'autres formes, y compris d'autres groupes. Avec le Design Pattern Composite, nous pouvons traiter les formes individuelles et les groupes de formes de manière homogène, ce qui facilite les opérations de dessin, de déplacement, etc.
 
+\lstinputlisting[language=Java, caption=composite.java]{code/structural/composite.java}
+
+
+\newpage
 
 \subsection{Decorator}
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+Le design pattern Decorator est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est d'ajouter dynamiquement de nouvelles fonctionnalités à un objet en les enveloppant dans des objets décorateurs plutôt que de les étendre par héritage.
+
+Voici les principaux éléments qui composent le design pattern Decorator :
+
+\begin{enumerate}
+    \item \textbf{Component (Composant)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les composants à décorer.
+        \item Définit les méthodes de base que les décorateurs et les composants concrets implémentent.
+    \end{itemize}
+    
+    \item \textbf{Concrete Component (Composant Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de la classe Component.
+        \item Représente l'objet de base auquel des fonctionnalités supplémentaires peuvent être ajoutées.
+    \end{itemize}
+    
+    \item \textbf{Decorator (Décorateur)} :
+    \begin{itemize}
+        \item Classe abstraite qui étend Component et enveloppe les composants concrets.
+        \item Contient une référence à un objet de type Component.
+    \end{itemize}
+    
+    \item \textbf{Concrete Decorator (Décorateur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de la classe Decorator.
+        \item Ajoute des fonctionnalités supplémentaires à l'objet de base en le décorant.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Decorator se déroule comme suit :
+
+\begin{enumerate}
+    \item Les clients manipulent les composants à travers l'interface Component.
+    \item Les fonctionnalités supplémentaires sont ajoutées dynamiquement en enveloppant le composant de base dans des décorateurs appropriés.
+    \item Les décorateurs peuvent être empilés pour ajouter plusieurs fonctionnalités en cascade.
+    \item Chaque décorateur transmet les appels aux méthodes de base du composant au composant sous-jacent, permettant ainsi une chaîne de responsabilité.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet d'ajouter des fonctionnalités supplémentaires à un objet de manière flexible et dynamique, sans avoir à modifier sa structure de classe. Cela favorise la réutilisabilité du code en permettant la combinaison libre de fonctionnalités à la volée. Cependant, cela peut rendre la lecture du code plus complexe en raison de la présence de plusieurs couches de décorateurs.
+
 
 \subsubsection{Exemple}
 
+Supposons que nous développons une application de café et nous avons différentes boissons (expresso, café au lait) avec des options supplémentaires (lait, chocolat, sucre). Avec le Design Pattern Decorator, nous pouvons ajouter les options supplémentaires de manière dynamique à chaque boisson sans avoir besoin de créer de nombreuses classes pour chaque combinaison possible.
 
+\lstinputlisting[language=Java, caption=decorator.java]{code/structural/decorator.java}
+
+
+\newpage
 
 \subsection{Facade}
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+Le design pattern Facade est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de fournir une interface unifiée à un ensemble d'interfaces d'un sous-système afin de simplifier son utilisation et de masquer sa complexité.
+
+Voici les principaux éléments qui composent le design pattern Facade :
+
+\begin{enumerate}
+    \item \textbf{Facade (Facade)} :
+    \begin{itemize}
+        \item Classe qui fournit une interface unifiée à un ensemble d'interfaces plus complexes dans un sous-système.
+        \item Cache les détails de l'implémentation et simplifie l'interaction avec le sous-système.
+    \end{itemize}
+    
+    \item \textbf{Subsystem (Sous-système)} :
+    \begin{itemize}
+        \item Ensemble de classes et d'interfaces qui implémentent les fonctionnalités du système.
+        \item Ces classes ne sont pas directement accessibles par les clients mais sont utilisées par la facade pour réaliser les fonctionnalités demandées.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Facade se déroule comme suit :
+
+\begin{enumerate}
+    \item Les clients interagissent avec la Facade pour accéder aux fonctionnalités du sous-système.
+    \item La Facade traduit ces demandes en appels appropriés aux classes et interfaces du sous-système.
+    \item La Facade simplifie ainsi l'utilisation du sous-système en fournissant une interface plus conviviale et en masquant sa complexité interne.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de simplifier l'utilisation d'un sous-système complexe en fournissant une interface unifiée et conviviale. Cela permet aux clients de ne pas avoir à connaître les détails de l'implémentation du sous-système, ce qui favorise la modularité et la maintenance du code. Cependant, cela peut également limiter la flexibilité en cachant les détails d'implémentation, et il est important de concevoir soigneusement les interfaces de la Facade pour répondre aux besoins des clients.
+
 
 \subsubsection{Exemple}
 
+Supposons que nous développons une application pour gérer une voiture avec plusieurs sous-systèmes tels que le moteur, les freins, l'électronique, etc. Au lieu d'interagir directement avec chaque sous-système, nous pouvons créer une Facade Car pour regrouper les fonctionnalités de chaque sous-système et fournir une interface unique pour interagir avec la voiture.
 
+\lstinputlisting[language=Java, caption=facade.java]{code/structural/facade.java}
+
+
+\newpage
 
 \subsection{Flyweight}
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+Le design pattern Flyweight est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de minimiser l'utilisation de la mémoire ou du calcul en partageant autant que possible les données similaires entre plusieurs objets.
+
+Voici les principaux éléments qui composent le design pattern Flyweight :
+
+\begin{enumerate}
+    \item \textbf{Flyweight (Poids Léger)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les objets légers.
+        \item Contient les méthodes partagées entre les objets légers.
+    \end{itemize}
+    
+    \item \textbf{ConcreteFlyweight (Poids Léger Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Flyweight.
+        \item Représente un objet léger partagé qui stocke l'état intrinsèque (partagé) et ne dépend pas du contexte externe.
+    \end{itemize}
+    
+    \item \textbf{UnsharedConcreteFlyweight (Poids Léger Non Partagé)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Flyweight.
+        \item Représente un objet léger qui ne peut pas être partagé et stocke l'état extrinsèque (non partagé).
+    \end{itemize}
+    
+    \item \textbf{FlyweightFactory (Fabrique de Poids Légers)} :
+    \begin{itemize}
+        \item Gère et fournit les objets légers existants.
+        \item Assure le partage des objets légers lors de leur création.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Flyweight se déroule comme suit :
+
+\begin{enumerate}
+    \item Les clients demandent des objets légers à la FlyweightFactory.
+    \item Si l'objet léger existe déjà dans la FlyweightFactory, il est renvoyé au client.
+    \item Sinon, un nouvel objet léger est créé et stocké dans la FlyweightFactory pour une utilisation ultérieure.
+    \item Les clients manipulent les objets légers via l'interface Flyweight.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de réduire la consommation de mémoire en partageant les objets similaires entre plusieurs instances. Cela peut être particulièrement utile lorsque de nombreux objets doivent être créés, mais leur état est souvent répétitif. Cependant, cela peut également rendre le code plus complexe en raison de la nécessité de gérer les états partagés et non partagés.
+
 
 \subsubsection{Exemple}
 
+Supposons que nous développons un éditeur de texte où chaque caractère est représenté par un objet Character. Plutôt que de créer un nouvel objet Character pour chaque caractère du texte, nous pouvons utiliser le Design Pattern Flyweight pour stocker les caractères déjà créés dans un cache et les réutiliser lorsque le même caractère est demandé à nouveau.
 
+\lstinputlisting[language=Java, caption=flyweight.java]{code/structural/flyweight.java}
+
+
+\newpage
 
 \subsection{Proxy}
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+Le design pattern Proxy est un modèle de conception appartenant à la catégorie des patrons de conception structurels. Son objectif principal est de fournir un substitut ou un espace réservé à un autre objet afin de contrôler l'accès à celui-ci ou de fournir des fonctionnalités supplémentaires.
+
+Voici les principaux éléments qui composent le design pattern Proxy :
+
+\begin{enumerate}
+    \item \textbf{Subject (Sujet)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à l'objet réel et à son proxy.
+        \item Définit les méthodes communes que le proxy et l'objet réel implémentent.
+    \end{itemize}
+    
+    \item \textbf{RealSubject (Sujet Réel)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Subject.
+        \item Représente l'objet réel dont l'accès est contrôlé par le proxy.
+    \end{itemize}
+    
+    \item \textbf{Proxy} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Subject.
+        \item Contrôle l'accès à l'objet réel et fournit des fonctionnalités supplémentaires si nécessaire.
+        \item Peut retarder la création et l'initialisation de l'objet réel jusqu'à ce qu'il soit vraiment nécessaire (lazy initialization).
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Proxy se déroule comme suit :
+
+\begin{enumerate}
+    \item Les clients interagissent avec le proxy à travers l'interface Subject.
+    \item Si l'objet réel n'est pas encore créé, le proxy peut le créer et l'initialiser de manière transparente.
+    \item Le proxy transmet ensuite les appels à l'objet réel ou effectue des traitements supplémentaires avant ou après la transmission de l'appel.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de contrôler l'accès à l'objet réel et de fournir des fonctionnalités supplémentaires sans modifier son code. Cela peut être utile pour ajouter des fonctionnalités telles que la mise en cache, la journalisation, la sécurité ou la gestion des ressources. Cependant, cela peut également introduire une complexité supplémentaire dans le code en raison de la présence de plusieurs couches de proxy.
+
 
 \subsubsection{Exemple}
 
+Supposons que nous développons une application pour télécharger des fichiers depuis Internet. Le téléchargement des fichiers peut être coûteux en temps, nous pouvons donc utiliser un Proxy pour vérifier les autorisations de l'utilisateur avant de permettre le téléchargement et pour mettre en cache les fichiers téléchargés pour une utilisation ultérieure.
+
+\lstinputlisting[language=Java, caption=proxy.java]{code/structural/proxy.java}
 
 
+\newpage
 
 \section{Patterns de Comportement (Behavioral)}
 
@@ -533,7 +736,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -543,7 +746,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -553,7 +756,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -563,7 +766,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -573,7 +776,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -583,7 +786,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -593,7 +796,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -603,7 +806,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -613,7 +816,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -623,7 +826,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
@@ -633,7 +836,7 @@ Supposons que nous développons un système de formes géométriques avec diffé
 
 \subsubsection{Description}
 
-\subsubsection{Motivation}
+
 
 \subsubsection{Exemple}
 
