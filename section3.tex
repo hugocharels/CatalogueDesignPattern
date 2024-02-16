@@ -1,0 +1,575 @@
+\section{Patterns de Comportement (Behavioral)}
+
+\subsection{Chain of Responsibility}
+
+\subsubsection{Description}
+
+Le design pattern Chain of Responsibility est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de permettre le passage d'une requête le long d'une chaîne de traitements, où chaque maillon de la chaîne peut traiter la requête ou la transmettre au maillon suivant.
+
+Voici les principaux éléments qui composent le design pattern Chain of Responsibility :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Handler (Gestionnaire)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les gestionnaires.
+        \item Définit une méthode pour traiter les requêtes et une référence au prochain gestionnaire dans la chaîne.
+    \end{itemize}
+    
+    \item \textbf{ConcreteHandler (Gestionnaire Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Handler.
+        \item Traite la requête si possible, sinon la transmet au prochain gestionnaire dans la chaîne.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Chain of Responsibility se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les clients envoient des requêtes à un gestionnaire initial dans la chaîne.
+    \item Chaque gestionnaire décide s'il peut traiter la requête ou s'il doit la transmettre au gestionnaire suivant.
+    \item La requête est transmise le long de la chaîne jusqu'à ce qu'elle soit traitée ou que la fin de la chaîne soit atteinte.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de découpler l'émetteur d'une requête de ses destinataires en permettant à plusieurs objets de tenter de traiter la requête sans connaître explicitement les autres. Cela favorise la flexibilité et la réutilisabilité du code en permettant de modifier dynamiquement la chaîne de responsabilité ou d'ajouter de nouveaux gestionnaires sans modifier le code client. Cependant, cela peut également rendre la gestion des requêtes plus complexe si la chaîne devient trop longue ou si les gestionnaires ne sont pas correctement configurés.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application de gestion des demandes de congés dans une entreprise. Nous pouvons utiliser le Design Pattern Chain of Responsibility pour créer une chaîne de responsabilité où chaque gestionnaire (par exemple, RH, manager, directeur) peut approuver ou rejeter la demande de congé. Si un gestionnaire ne peut pas traiter la demande, il la transmet au gestionnaire supérieur dans la chaîne.
+
+\lstinputlisting[language=Java, caption=chain\_of\_responsibility.java]{src/behavioral/chain_of_responsibility.java}
+
+
+\newpage
+
+\subsection{Command}
+
+\subsubsection{Description}
+
+Le design pattern Command est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est d'encapsuler une requête en tant qu'objet, ce qui permet de paramétrer des clients avec différentes requêtes, de mettre en file d'attente les requêtes, de les enregistrer et d'annuler les opérations.
+
+Voici les principaux éléments qui composent le design pattern Command :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Command (Commande)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les commandes.
+        \item Définit une méthode pour exécuter la commande.
+    \end{itemize}
+    
+    \item \textbf{ConcreteCommand (Commande Concrite)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Command.
+        \item Contient une référence à l'objet receveur (celui qui effectue l'action) et implémente la méthode pour exécuter la commande en appelant une ou plusieurs méthodes du receveur.
+    \end{itemize}
+    
+    \item \textbf{Invoker (Invocateur)} :
+    \begin{itemize}
+        \item Demande à la commande d'exécuter une action.
+        \item Ne connaît pas les détails de l'implémentation de la commande.
+    \end{itemize}
+    
+    \item \textbf{Receiver (Receveur)} :
+    \begin{itemize}
+        \item Connaît la manière d'effectuer l'action associée à la commande.
+        \item Implémente les méthodes que les commandes appellent pour effectuer les opérations.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Command se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Un objet de commande est créé et associé à un receveur.
+    \item L'objet de commande est passé à l'invocateur.
+    \item L'invocateur demande à l'objet de commande d'exécuter une action.
+    \item L'objet de commande appelle la méthode appropriée sur le receveur pour effectuer l'action.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de déconnecter l'objet qui invoque l'opération de celui qui la traite, ce qui permet de créer des systèmes flexibles et extensibles. Il permet également de mettre en file d'attente, d'enregistrer et d'annuler des opérations facilement. Cependant, cela peut rendre le code plus complexe en introduisant de nombreux objets de commande et en nécessitant une gestion appropriée de leur cycle de vie.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application de traitement de texte où nous souhaitons permettre aux utilisateurs d'effectuer des opérations telles que copier, coller et annuler. Nous pouvons utiliser le Design Pattern Command pour créer des classes de commandes (par exemple, CopyCommand, PasteCommand, UndoCommand) qui encapsulent chaque opération et les exécuter au besoin.
+
+\lstinputlisting[language=Java, caption=command.java]{src/behavioral/command.java}
+
+
+\newpage
+
+\subsection{Interpreter}
+
+\subsubsection{Description}
+
+Le design pattern Interpreter est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de définir une grammaire pour un langage et de fournir un moyen d'interpréter et d'exécuter ce langage.
+
+Voici les principaux éléments qui composent le design pattern Interpreter :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{AbstractExpression (Expression Abstraite)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à toutes les expressions.
+        \item Définit une méthode pour interpréter une expression donnée.
+    \end{itemize}
+    
+    \item \textbf{TerminalExpression (Expression Terminale)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface AbstractExpression.
+        \item Représente une expression de base qui ne peut pas être décomposée en d'autres expressions.
+    \end{itemize}
+    
+    \item \textbf{NonterminalExpression (Expression Non Terminale)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface AbstractExpression.
+        \item Représente une expression composée de sous-expressions.
+    \end{itemize}
+    
+    \item \textbf{Context (Contexte)} :
+    \begin{itemize}
+        \item Contient des informations globales qui sont partagées entre les expressions pendant l'interprétation.
+    \end{itemize}
+    
+    \item \textbf{Client} :
+    \begin{itemize}
+        \item Construit et configure l'arbre d'expression.
+        \item Évalue les expressions en appelant la méthode d'interprétation sur la racine de l'arbre.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Interpreter se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les clients construisent un arbre d'expression à partir d'expressions terminales et non terminales.
+    \item Les clients évaluent l'expression en appelant la méthode d'interprétation sur la racine de l'arbre.
+    \item Chaque nœud de l'arbre d'expression interprète et évalue les sous-expressions, transmettant le contexte si nécessaire.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de définir une grammaire pour un langage et d'interpréter les expressions de manière flexible. Cela peut être utile pour implémenter des langages de programmation, des systèmes de requêtes ou d'autres systèmes basés sur la logique. Cependant, cela peut rendre le code complexe en raison de la nécessité de définir de nombreuses classes d'expressions et de gérer la construction de l'arbre d'expression.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application pour évaluer des expressions arithmétiques simples, telles que "2 + 3 * 4". Nous pouvons utiliser le Design Pattern Interpreter pour créer une grammaire et un interpréteur qui évalue ces expressions.
+
+\lstinputlisting[language=Java, caption=interpreter.java]{src/behavioral/interpreter.java}
+
+
+
+\newpage
+
+
+\subsection{Iterator}
+
+\subsubsection{Description}
+
+Le design pattern Iterator est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de fournir un moyen d'accéder séquentiellement aux éléments d'une collection sans exposer sa représentation interne.
+
+Voici les principaux éléments qui composent le design pattern Iterator :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Iterator (Itérateur)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les itérateurs.
+        \item Définit des méthodes pour parcourir la collection, obtenir l'élément suivant et vérifier s'il reste des éléments.
+    \end{itemize}
+    
+    \item \textbf{ConcreteIterator (Itérateur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Iterator.
+        \item Maintient une référence à la position actuelle dans la collection et implémente les méthodes pour parcourir la collection.
+    \end{itemize}
+    
+    \item \textbf{Aggregate (Agrégat)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à toutes les collections.
+        \item Définit une méthode pour créer un itérateur.
+    \end{itemize}
+    
+    \item \textbf{ConcreteAggregate (Agrégat Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Aggregate.
+        \item Fournit une méthode pour créer un itérateur qui parcourt la collection spécifique.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Iterator se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les clients obtiennent un itérateur à partir de la collection en appelant la méthode de création d'itérateur de l'agrégat.
+    \item Les clients utilisent l'itérateur pour parcourir séquentiellement les éléments de la collection en utilisant les méthodes définies dans l'interface Iterator.
+    \item L'itérateur maintient la position actuelle dans la collection et permet aux clients d'accéder à chaque élément individuellement sans avoir à connaître les détails de la collection sous-jacente.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de parcourir les éléments d'une collection de manière flexible et indépendante de sa représentation interne. Cela favorise la réutilisabilité du code en permettant d'utiliser les mêmes itérateurs avec différentes collections, tout en préservant l'encapsulation des collections. Cependant, cela peut rendre le code plus complexe en raison de la nécessité de définir des classes d'itérateurs pour chaque type de collection.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application pour gérer une liste de tâches. Nous pouvons utiliser le Design Pattern Iterator pour permettre aux clients de parcourir les tâches dans la liste sans avoir à connaître la structure sous-jacente de la liste.
+
+\lstinputlisting[language=Java, caption=iterator.java]{src/behavioral/iterator.java}
+
+
+\newpage
+
+\subsection{Mediator}
+
+\subsubsection{Description}
+
+Le design pattern Mediator est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de définir un objet qui encapsule la manière dont un ensemble d'objets interagissent, en favorisant la déconnexion entre ces objets.
+
+Voici les principaux éléments qui composent le design pattern Mediator :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Mediator (Médiateur)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les médiateurs.
+        \item Définit des méthodes pour permettre la communication entre les objets du système.
+    \end{itemize}
+    
+    \item \textbf{ConcreteMediator (Médiateur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Mediator.
+        \item Gère la communication entre les objets en implémentant les méthodes définies dans l'interface Mediator.
+    \end{itemize}
+    
+    \item \textbf{Colleague (Collègue)} :
+    \begin{itemize}
+        \item Classe abstraite ou interface commune à tous les collègues.
+        \item Définit des méthodes pour interagir avec d'autres collègues via le médiateur.
+    \end{itemize}
+    
+    \item \textbf{ConcreteColleague (Collègue Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Colleague.
+        \item Communique avec d'autres collègues via le médiateur, en utilisant les méthodes définies dans l'interface Colleague.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Mediator se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les collègues communiquent entre eux en passant par le médiateur.
+    \item Lorsqu'un collègue a besoin de communiquer avec un autre collègue, il appelle une méthode sur le médiateur.
+    \item Le médiateur reçoit l'appel et transmet l'information au collègue concerné.
+    \item Le médiateur peut effectuer des traitements supplémentaires avant de transmettre l'information au collègue destinataire.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de déconnecter étroitement les objets du système en évitant les dépendances directes entre eux. Cela favorise la modularité et la maintenabilité du code en réduisant le couplage. Cependant, cela peut rendre le médiateur complexe s'il doit gérer de nombreuses interactions entre les collègues, et il est important de concevoir soigneusement les interfaces du médiateur et des collègues pour faciliter la communication.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un système de chat où plusieurs utilisateurs peuvent communiquer entre eux. Nous pouvons utiliser le Design Pattern Mediator pour créer un médiateur qui gère les communications entre les utilisateurs, de sorte qu'ils n'aient pas besoin de se connaître mutuellement.
+
+\lstinputlisting[language=Java, caption=mediator.java]{src/behavioral/mediator.java}
+
+
+\newpage
+
+\subsection{Memento}
+
+\subsubsection{Description}
+
+Le design pattern Memento est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de capturer et d'externaliser l'état interne d'un objet sans violer l'encapsulation, de manière à pouvoir le restaurer ultérieurement dans son état précédent.
+
+Voici les principaux éléments qui composent le design pattern Memento :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Memento (Mémento)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les mementos.
+        \item Définit des méthodes pour accéder à l'état sauvegardé.
+    \end{itemize}
+    
+    \item \textbf{ConcreteMemento (Mémento Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Memento.
+        \item Stocke l'état interne de l'objet d'origine à un moment donné.
+    \end{itemize}
+    
+    \item \textbf{Originator (Créateur)} :
+    \begin{itemize}
+        \item Classe dont l'état interne doit être sauvegardé.
+        \item Crée un memento contenant une copie de son état interne et peut restaurer son état à partir d'un memento donné.
+    \end{itemize}
+    
+    \item \textbf{Caretaker (Gardien)} :
+    \begin{itemize}
+        \item Classe responsable de la gestion des mementos.
+        \item Stocke les mementos dans une liste ou une structure de données appropriée et les fournit à l'originateur pour la restauration.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Memento se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item L'originateur crée un memento pour sauvegarder son état interne à un moment donné.
+    \item L'originateur peut utiliser ce memento pour restaurer son état interne à un moment ultérieur.
+    \item Le gardien peut stocker plusieurs mementos pour permettre la restauration de l'état à différents points dans le temps.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de restaurer l'état d'un objet à un moment antérieur sans violer son encapsulation. Cela peut être utile pour implémenter des fonctionnalités telles que l'annulation et la restauration d'actions dans une application. Cependant, cela peut également augmenter la consommation de mémoire si de nombreux mementos doivent être stockés, et il est important de gérer correctement le cycle de vie des mementos pour éviter les fuites de mémoire.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un éditeur de texte où les utilisateurs peuvent écrire et modifier du texte. Nous pouvons utiliser le Design Pattern Memento pour créer des mementos qui sauvegardent l'état du texte à un moment donné, afin de pouvoir restaurer cet état ultérieurement.
+
+\lstinputlisting[language=Java, caption=memento.java]{src/behavioral/memento.java}
+
+
+\newpage
+
+\subsection{Observer}
+
+\subsubsection{Description}
+
+Le design pattern Observer est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de définir une dépendance de type un-à-plusieurs entre objets, de manière à ce que lorsqu'un objet change d'état, tous ses dépendants soient notifiés et mis à jour automatiquement.
+
+Voici les principaux éléments qui composent le design pattern Observer :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Subject (Sujet)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les sujets observables.
+        \item Définit des méthodes pour ajouter, supprimer et notifier des observateurs.
+    \end{itemize}
+    
+    \item \textbf{ConcreteSubject (Sujet Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Subject.
+        \item Maintient l'état interne et notifie les observateurs lorsque cet état change.
+    \end{itemize}
+    
+    \item \textbf{Observer (Observateur)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les observateurs.
+        \item Définit une méthode de mise à jour appelée par le sujet lorsqu'un changement d'état se produit.
+    \end{itemize}
+    
+    \item \textbf{ConcreteObserver (Observateur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Observer.
+        \item Enregistre son intérêt pour les notifications auprès du sujet et réagit aux mises à jour de celui-ci.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Observer se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les observateurs s'enregistrent auprès du sujet pour recevoir des notifications.
+    \item Lorsque l'état du sujet change, il notifie tous ses observateurs en appelant leur méthode de mise à jour.
+    \item Les observateurs réagissent aux notifications en mettant à jour leur état ou en effectuant d'autres actions en conséquence.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de maintenir la cohérence entre les objets en évitant les dépendances directes et en favorisant la séparation des préoccupations. Cela favorise la modularité et la réutilisabilité du code en permettant de connecter et de déconnecter facilement les observateurs du sujet. Cependant, cela peut rendre le code plus complexe en raison de la multiplicité des interactions entre les sujets et les observateurs.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application météo où les utilisateurs peuvent s'abonner pour recevoir des mises à jour en temps réel sur la météo. Nous pouvons utiliser le Design Pattern Observer pour créer des observateurs (abonnés) qui sont notifiés chaque fois que les données météorologiques changent.
+
+\lstinputlisting[language=Java, caption=observer.java]{src/behavioral/observer.java}
+
+
+\newpage
+
+\subsection{State}
+
+\subsubsection{Description}
+
+Le design pattern State est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de permettre à un objet de modifier son comportement lorsqu'il change son état interne, de manière à ce que sa classe apparaisse modifiée.
+
+Voici les principaux éléments qui composent le design pattern State :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{State (État)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les états possibles de l'objet contexte.
+        \item Définit les méthodes que l'objet contexte peut appeler pour modifier son comportement.
+    \end{itemize}
+    
+    \item \textbf{ConcreteState (État Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface State.
+        \item Représente un état spécifique de l'objet contexte et implémente les méthodes définies dans l'interface State pour modifier son comportement en fonction de cet état.
+    \end{itemize}
+    
+    \item \textbf{Context (Contexte)} :
+    \begin{itemize}
+        \item Classe qui possède un état interne.
+        \item Utilise l'interface State pour déléguer les requêtes associées à un certain état à l'objet ConcreteState approprié.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern State se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Le contexte délègue les requêtes associées à un certain état à l'objet ConcreteState approprié.
+    \item L'objet ConcreteState modifie le comportement du contexte en réponse à la requête.
+    \item Lorsque le contexte change d'état, il change également l'objet ConcreteState associé en conséquence.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de définir un comportement spécifique pour chaque état d'un objet sans avoir recours à de longues séries d'instructions conditionnelles. Cela favorise la modularité et la maintenabilité du code en séparant les responsabilités liées à chaque état dans des classes distinctes. Cependant, cela peut augmenter la complexité du code en introduisant de nombreuses classes d'états et en nécessitant une gestion appropriée de la transition entre les états.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un lecteur de musique qui peut être dans trois états : Lecture, Pause et Arrêt. Nous pouvons utiliser le Design Pattern State pour modéliser ces états et gérer les transitions entre eux.
+
+\lstinputlisting[language=Java, caption=state.java]{src/behavioral/state.java}
+
+
+
+\newpage
+
+\subsection{Strategy}
+
+\subsubsection{Description}
+
+Le design pattern Strategy est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de définir une famille d'algorithmes, encapsuler chacun d'eux et les rendre interchangeables. Ainsi, un client peut choisir dynamiquement l'algorithme approprié sans modifier la classe cliente.
+
+Voici les principaux éléments qui composent le design pattern Strategy :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Strategy (Stratégie)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à toutes les stratégies.
+        \item Définit une méthode ou un ensemble de méthodes utilisées par le contexte pour exécuter l'algorithme.
+    \end{itemize}
+    
+    \item \textbf{ConcreteStrategy (Stratégie Concrète)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Strategy.
+        \item Contient l'algorithme spécifique à exécuter.
+    \end{itemize}
+    
+    \item \textbf{Context (Contexte)} :
+    \begin{itemize}
+        \item Classe qui utilise une stratégie pour exécuter un algorithme.
+        \item Peut modifier la stratégie utilisée à tout moment pendant l'exécution.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Strategy se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Le contexte encapsule une référence à une stratégie.
+    \item Lorsqu'une opération est requise, le contexte appelle la méthode de la stratégie pour exécuter l'algorithme.
+    \item Le client peut modifier la stratégie du contexte à tout moment en remplaçant la stratégie par une autre stratégie compatible.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de définir une famille d'algorithmes, encapsuler chacun d'eux et les rendre interchangeables. Cela favorise la flexibilité et la réutilisabilité du code en permettant de choisir dynamiquement l'algorithme approprié à exécuter. Cependant, cela peut augmenter la complexité du code en introduisant de nombreuses classes de stratégies et en nécessitant une gestion appropriée des contextes et des stratégies.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application de paiement en ligne, où les utilisateurs peuvent choisir différents modes de paiement (carte de crédit, PayPal, virement bancaire). Nous pouvons utiliser le Design Pattern Strategy pour définir une stratégie pour chaque mode de paiement et permettre au client de choisir la stratégie souhaitée.
+
+\lstinputlisting[language=Java, caption=strategy.java]{src/behavioral/strategy.java}
+
+
+\newpage
+
+\subsection{Template Method}
+
+\subsubsection{Description}
+
+Le design pattern Template Method est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de définir le squelette d'un algorithme dans une opération, en laissant certains de ses pas aux sous-classes. Ainsi, les sous-classes peuvent redéfinir certaines étapes de l'algorithme sans en changer la structure globale.
+
+Voici les principaux éléments qui composent le design pattern Template Method :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{AbstractClass (Classe Abstraite)} :
+    \begin{itemize}
+        \item Classe qui définit le squelette de l'algorithme dans une méthode template.
+        \item Contient des méthodes concrètes, abstraites ou facultatives, qui sont utilisées par la méthode template.
+    \end{itemize}
+    
+    \item \textbf{ConcreteClass (Classe Concrète)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'AbstractClass.
+        \item Redéfinit les méthodes abstraites ou facultatives selon les besoins spécifiques de l'algorithme.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Template Method se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item La classe abstraite définit une méthode template qui encapsule l'algorithme, en appelant séquentiellement les différentes étapes de l'algorithme.
+    \item Les étapes de l'algorithme qui peuvent varier sont définies comme des méthodes abstraites ou facultatives dans la classe abstraite.
+    \item Les classes concrètes étendent la classe abstraite et redéfinissent les méthodes abstraites ou facultatives selon les besoins spécifiques de l'algorithme.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet de définir une structure générale pour un algorithme tout en permettant aux sous-classes de redéfinir certaines étapes de cet algorithme sans en changer la structure globale. Cela favorise la réutilisabilité du code en évitant la duplication de code pour des algorithmes similaires. Cependant, cela peut également rendre le code plus complexe en introduisant des classes abstraites et en nécessitant une bonne compréhension de la structure générale de l'algorithme.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons un jeu où les joueurs peuvent choisir différentes classes de personnages (guerrier, mage, archer). Chaque classe a une méthode de combat spécifique, mais le déroulement général du combat reste le même pour toutes les classes. Nous pouvons utiliser le Design Pattern Template Method pour définir un modèle de méthode de combat et laisser chaque classe de personnage implémenter ses propres attaques spécifiques.
+
+\lstinputlisting[language=Java, caption=template\_method.java]{src/behavioral/template_method.java}
+
+
+
+\newpage
+
+\subsection{Visitor}
+
+\subsubsection{Description}
+
+Le design pattern Visitor est un modèle de conception appartenant à la catégorie des patrons de conception comportementaux. Son objectif principal est de permettre de définir de nouvelles opérations sur une structure d'objets sans modifier les classes de ces objets.
+
+Voici les principaux éléments qui composent le design pattern Visitor :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item \textbf{Visitor (Visiteur)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les visiteurs.
+        \item Définit des méthodes pour visiter chaque type d'objet de la structure.
+    \end{itemize}
+    
+    \item \textbf{ConcreteVisitor (Visiteur Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Visitor.
+        \item Contient l'implémentation des méthodes de visite pour chaque type d'objet de la structure.
+    \end{itemize}
+    
+    \item \textbf{Element (Élément)} :
+    \begin{itemize}
+        \item Interface ou classe abstraite commune à tous les éléments de la structure.
+        \item Définit une méthode accept pour accepter les visites des visiteurs.
+    \end{itemize}
+    
+    \item \textbf{ConcreteElement (Élément Concret)} :
+    \begin{itemize}
+        \item Implémentation concrète de l'interface Element.
+        \item Implémente la méthode accept en appelant la méthode de visite correspondante sur le visiteur.
+    \end{itemize}
+    
+    \item \textbf{ObjectStructure (Structure d'Objets)} :
+    \begin{itemize}
+        \item Collection d'objets à visiter.
+        \item Fournit une méthode pour itérer sur les objets et appeler leur méthode accept pour accepter les visites des visiteurs.
+    \end{itemize}
+\end{enumerate}
+
+Le processus d'utilisation du design pattern Visitor se déroule comme suit :
+
+\begin{enumerate}[leftmargin=*,labelsep=3mm]
+    \item Les visiteurs implémentent des méthodes de visite pour chaque type d'objet de la structure.
+    \item Chaque objet de la structure implémente une méthode accept qui appelle la méthode de visite correspondante sur le visiteur.
+    \item Lorsque la structure doit être parcourue, chaque objet accepte les visites des visiteurs appropriés.
+\end{enumerate}
+
+L'avantage principal de ce modèle est qu'il permet d'ajouter de nouvelles opérations sur une structure d'objets sans modifier les classes de ces objets. Cela favorise la modularité et la maintenabilité du code en séparant les opérations à appliquer sur les objets de la structure dans des classes de visiteurs distinctes. Cependant, cela peut augmenter la complexité du code en introduisant de nombreuses classes de visiteurs et en nécessitant une bonne compréhension de la structure d'objets et des opérations à appliquer.
+
+
+\subsubsection{Exemple}
+
+Supposons que nous développons une application de dessin avec différentes formes géométriques (cercle, carré, triangle). Nous voulons pouvoir ajouter de nouvelles fonctionnalités, telles que le calcul de l'aire ou le déplacement des formes, sans modifier les classes existantes. Nous pouvons utiliser le Design Pattern Visitor pour définir un visiteur externe pour chaque nouvelle fonctionnalité.
+
+\lstinputlisting[language=Java, caption=visitor.java]{src/behavioral/visitor.java}
+
+
