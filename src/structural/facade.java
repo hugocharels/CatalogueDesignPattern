@@ -1,4 +1,35 @@
-// Subsystem classes
+// Facade
+class Car {
+    private Engine engine;
+    private Brakes brakes;
+    private Electronics electronics;
+
+    public Car() {
+        engine = new Engine();
+        brakes = new Brakes();
+        electronics = new Electronics();
+    }
+
+    public void startCar() {
+        engine.start();
+        electronics.activate();
+    }
+
+    public void stopCar() {
+        electronics.deactivate();
+        engine.stop();
+    }
+
+    public void applyBrakes() {
+        brakes.apply();
+    }
+
+    public void releaseBrakes() {
+        brakes.release();
+    }
+}
+
+// Subsystem
 class Engine {
     public void start() {
         System.out.println("Engine started");
@@ -29,36 +60,6 @@ class Electronics {
     }
 }
 
-// Facade class
-class Car {
-    private Engine engine;
-    private Brakes brakes;
-    private Electronics electronics;
-
-    public Car() {
-        engine = new Engine();
-        brakes = new Brakes();
-        electronics = new Electronics();
-    }
-
-    public void startCar() {
-        engine.start();
-        electronics.activate();
-    }
-
-    public void stopCar() {
-        electronics.deactivate();
-        engine.stop();
-    }
-
-    public void applyBrakes() {
-        brakes.apply();
-    }
-
-    public void releaseBrakes() {
-        brakes.release();
-    }
-}
 
 // Client Code
 public class Client {

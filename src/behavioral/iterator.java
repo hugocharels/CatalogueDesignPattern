@@ -4,11 +4,6 @@ interface Iterator<T> {
     T next();
 }
 
-// Aggregate Interface
-interface TaskList {
-    Iterator<String> createIterator();
-}
-
 // Concrete Iterator
 class TaskListIterator implements Iterator<String> {
     private TaskList taskList;
@@ -32,6 +27,11 @@ class TaskListIterator implements Iterator<String> {
         }
         return null;
     }
+}
+
+// Aggregate Interface
+interface TaskList {
+    Iterator<String> createIterator();
 }
 
 // Concrete Aggregate

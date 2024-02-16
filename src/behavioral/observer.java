@@ -1,11 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-// Observer Interface
-interface Observer {
-    void update(String weatherData);
-}
-
 // Subject Interface
 interface Subject {
     void registerObserver(Observer observer);
@@ -39,6 +34,11 @@ class WeatherStation implements Subject {
         this.weatherData = weatherData;
         notifyObservers();
     }
+}
+
+// Observer Interface
+interface Observer {
+    void update(String weatherData);
 }
 
 // Concrete Observer

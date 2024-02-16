@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 // Visitor Interface
 interface ShapeVisitor {
     void visitCircle(Circle circle);
@@ -183,18 +186,38 @@ class Triangle implements Shape {
     }
 }
 
+// ObjectStructure
+class ShapeCollection {
+    private List<Shape> shapes = new ArrayList<>();
+
+    public void addShape(Shape shape) {
+        shapes.add(shape);
+    }
+
+    public void removeShape(Shape shape) {
+        shapes.remove(shape);
+    }
+
+    public void accept(ShapeVisitor visitor) {
+        for (Shape shape : shapes) {
+            shape.accept(visitor);
+        }
+    }
+}
+
 // Client Code
 public class Client {
     public static void main(String[] args) {
-        Shape[] shapes = {new Circle(10, 20, 5), new Square(30, 40, 10), new Triangle(50, 60, 8, 12)};
+        ShapeCollection shapeCollection = new ShapeCollection();
+        shapeCollection.addShape(new Circle(10, 20, 5));
+        shapeCollection.addShape(new Square(30, 40, 10));
+        shapeCollection.addShape(new Triangle(50, 60, 8, 12));
 
         AreaCalculator areaCalculator = new AreaCalculator();
         ShapeMover shapeMover = new ShapeMover(5, 5);
 
-        for (Shape shape : shapes) {
-            shape.accept(areaCalculator);
-            shape.accept(shapeMover);
-        }
+        shapeCollection.accept(areaCalculator);
+        shapeCollection.accept(shapeMover);
 
         System.out.println("Total area: " + areaCalculator.getTotalArea());
     }

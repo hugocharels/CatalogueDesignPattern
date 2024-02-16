@@ -1,11 +1,17 @@
-// Memento
-class TextMemento {
+// Memento Interface
+interface Memento {
+    String getText();
+}
+
+// Concrete Memento
+class TextMemento implements Memento {
     private String text;
 
-    public TextMemento(String text) {
+    public TextEditorMemento(String text) {
         this.text = text;
     }
 
+    @Override
     public String getText() {
         return text;
     }

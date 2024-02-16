@@ -1,26 +1,32 @@
+// Target Interface
+interface Printer {
+    void print(String document);
+}
+
 // Adaptee (LegacyPrinter)
 class LegacyPrinter {
-    public void print(String document) {
+    public void printDocument(String document) {
         System.out.println("Printing document: " + document);
     }
 }
 
 // Adapter
-class ModernPrinterAdapter extends LegacyPrinter {
-    private ModernPrinter modernPrinter;
+class LegacyPrinterAdapter implements Printer {
+    private LegacyPrinter legacyPrinter;
 
-    public ModernPrinterAdapter(ModernPrinter modernPrinter) {
-        this.modernPrinter = modernPrinter;
+    public LegacyPrinterAdapter(LegacyPrinter legacyPrinter) {
+        this.legacyPrinter = legacyPrinter;
     }
 
     @Override
     public void print(String document) {
-        modernPrinter.print(document);
+        legacyPrinter.printDocument(document);
     }
 }
 
 // New Printer (Using a different interface)
-class ModernPrinter {
+class ModernPrinter implements Printer {
+    @Override
     public void print(String document) {
         System.out.println("Printing modern document: " + document);
     }
@@ -31,9 +37,9 @@ public class Client {
     public static void main(String[] args) {
         // Using Legacy Printer with the Adapter
         LegacyPrinter legacyPrinter = new LegacyPrinter();
-        ModernPrinterAdapter adapter = new ModernPrinterAdapter(new ModernPrinter());
+        Printer legacyPrinterAdapter = new LegacyPrinterAdapter(legacyPrinter);
 
-        legacyPrinter.print("Legacy Document"); // Using Legacy Printer directly
-        adapter.print("Modern Document"); // Using Modern Printer with the Adapter
+        legacyPrinter.printDocument("Legacy Document"); // Using Legacy Printer directly
+        legacyPrinterAdapter.print("Modern Document"); // Using Modern Printer with the Adapter
     }
 }

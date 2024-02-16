@@ -15,17 +15,18 @@ Voici les principaux éléments qui composent le design pattern Adapter :
         \item Interface que le client utilise pour interagir avec le système.
     \end{itemize}
     
+    \item \textbf{Adaptee (Adapté)} :
+    \begin{itemize}
+        \item Classe existante dont l'interface n'est pas compatible avec l'interface Target.
+        \item La classe que l'Adapter va adapter pour qu'elle puisse être utilisée par le client.
+    \end{itemize}
+    
     \item \textbf{Adapter (Adaptateur)} :
     \begin{itemize}
         \item Classe qui adapte l'interface d'une classe existante (Adaptee) à l'interface Target attendue par le client.
         \item Implémente l'interface Target et contient une instance de la classe Adaptee.
     \end{itemize}
     
-    \item \textbf{Adaptee (Adapté)} :
-    \begin{itemize}
-        \item Classe existante dont l'interface n'est pas compatible avec l'interface Target.
-        \item La classe que l'Adapter va adapter pour qu'elle puisse être utilisée par le client.
-    \end{itemize}
 \end{enumerate}
 
 Le processus d'utilisation du design pattern Adapter se déroule comme suit :

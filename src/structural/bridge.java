@@ -1,23 +1,3 @@
-// Implementor Interface
-interface DrawingAPI {
-    void drawCircle(double x, double y, double radius);
-}
-
-// Concrete Implementations of DrawingAPI
-class DrawingVector implements DrawingAPI {
-    @Override
-    public void drawCircle(double x, double y, double radius) {
-        System.out.println("Drawing Circle in Vector at (" + x + "," + y + ") with radius " + radius);
-    }
-}
-
-class DrawingRaster implements DrawingAPI {
-    @Override
-    public void drawCircle(double x, double y, double radius) {
-        System.out.println("Drawing Circle in Raster at (" + x + "," + y + ") with radius " + radius);
-    }
-}
-
 // Abstraction
 abstract class Shape {
     protected DrawingAPI drawingAPI;
@@ -42,6 +22,26 @@ class CircleShape extends Shape {
 
     public void draw() {
         drawingAPI.drawCircle(x, y, radius);
+    }
+}
+
+// Implementor Interface
+interface DrawingAPI {
+    void drawCircle(double x, double y, double radius);
+}
+
+// Concrete Implementations of DrawingAPI
+class DrawingVector implements DrawingAPI {
+    @Override
+    public void drawCircle(double x, double y, double radius) {
+        System.out.println("Drawing Circle in Vector at (" + x + "," + y + ") with radius " + radius);
+    }
+}
+
+class DrawingRaster implements DrawingAPI {
+    @Override
+    public void drawCircle(double x, double y, double radius) {
+        System.out.println("Drawing Circle in Raster at (" + x + "," + y + ") with radius " + radius);
     }
 }
 

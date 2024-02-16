@@ -48,7 +48,20 @@ class MultiplyExpression implements Expression {
     }
 }
 
-// Client Code
+// Context
+class Context {
+    private Expression expression;
+
+    public Context(Expression expression) {
+        this.expression = expression;
+    }
+
+    public int evaluate() {
+        return expression.interpret();
+    }
+}
+
+// Client
 public class Client {
     public static void main(String[] args) {
         // Expression: 2 + 3 * 4
@@ -60,7 +73,8 @@ public class Client {
             )
         );
 
-        int result = expression.interpret();
+        Context context = new Context(expression);
+        int result = context.evaluate();
         System.out.println("Result: " + result); // Output: Result: 14
     }
 }
